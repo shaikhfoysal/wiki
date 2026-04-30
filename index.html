@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wiki Demo - Tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            fadeSlide: {
+              '0%': { opacity: '0', transform: 'translateY(8px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            fadeSlide: 'fadeSlide 300ms ease'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen m-0 text-slate-800 font-sans bg-[radial-gradient(circle_at_10%_15%,#ffffff_0%,transparent_35%),radial-gradient(circle_at_90%_80%,#eef6ff_0%,transparent_30%),#f2f0ea]">
+  <button id="mobile-nav-toggle" class="fixed left-4 top-4 z-50 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow lg:hidden" type="button" aria-expanded="false">
+    Show Menu
+  </button>
+  <main class="grid min-h-screen grid-cols-1 lg:grid-cols-[300px_1fr]">
+    <aside id="wiki-nav" class="nav hidden lg:block lg:sticky lg:top-0 lg:h-screen overflow-auto border-b lg:border-b-0 lg:border-r border-stone-300/90 bg-[#fcfbf7e6] backdrop-blur-sm p-4 lg:p-6">
+      <h1 class="m-0 mb-3 font-semibold tracking-wide text-[1.35rem]">My Wiki</h1>
+      <input id="search" class="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-[0.94rem] outline-none focus:border-teal-300 focus:ring-4 focus:ring-teal-100" type="search" placeholder="Search topics..." />
+
+      <div class="nav-group mt-3 overflow-hidden rounded-lg border border-stone-300 bg-stone-50" data-group>
+        <button class="group-toggle flex w-full items-center justify-between px-3 py-2 font-semibold text-slate-700" type="button" aria-expanded="true">
+          <span>Getting Started</span>
+          <span class="toggle-icon text-xs text-slate-500">▾</span>
+        </button>
+        <div class="nav-list grid gap-1.5 p-2" data-group-content>
+          <button class="nav-btn active-nav w-full rounded-md border border-transparent bg-teal-100 px-3 py-2 text-left text-[0.93rem] font-semibold text-teal-900 transition hover:translate-x-0.5 hover:border-stone-300 hover:bg-stone-100" data-target="intro">Introduction</button>
+          <button class="nav-btn w-full rounded-md border border-transparent px-3 py-2 text-left text-[0.93rem] transition hover:translate-x-0.5 hover:border-stone-300 hover:bg-stone-100" data-target="markdown">Markdown Guide</button>
+        </div>
+      </div>
+
+      <div class="nav-group mt-2 overflow-hidden rounded-lg border border-stone-300 bg-stone-50" data-group>
+        <button class="group-toggle flex w-full items-center justify-between px-3 py-2 font-semibold text-slate-700" type="button" aria-expanded="false">
+          <span>Frontend Basics</span>
+          <span class="toggle-icon text-xs text-slate-500">▸</span>
+        </button>
+        <div class="nav-list hidden grid gap-1.5 p-2" data-group-content>
+          <button class="nav-btn w-full rounded-md border border-transparent px-3 py-2 text-left text-[0.93rem] transition hover:translate-x-0.5 hover:border-stone-300 hover:bg-stone-100" data-target="html">HTML Basics</button>
+          <button class="nav-btn w-full rounded-md border border-transparent px-3 py-2 text-left text-[0.93rem] transition hover:translate-x-0.5 hover:border-stone-300 hover:bg-stone-100" data-target="css">CSS Styling</button>
+          <button class="nav-btn w-full rounded-md border border-transparent px-3 py-2 text-left text-[0.93rem] transition hover:translate-x-0.5 hover:border-stone-300 hover:bg-stone-100" data-target="js">JavaScript</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="p-5 lg:p-9">
+      <article id="intro" class="panel block max-w-[920px] animate-fadeSlide">
+        <h2 class="m-0 mb-2 text-3xl font-semibold">Introduction</h2>
+        <div class="md-output mb-4 leading-7 text-slate-700" data-markdown="# Welcome to the Wiki\nUse the left menu to open topics with an animated content switch.\n\n## Features\n- Nested navigation categories\n- Live topic search\n- Markdown-based detail content\n- Copyable code snippets"></div>
+        <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/20">
+          <div class="flex items-center justify-between border-b border-slate-700 bg-slate-900 px-3 py-2">
+            <span class="text-xs uppercase tracking-wide text-slate-300">html</span>
+            <button class="copy-btn rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-sm text-slate-200 transition hover:border-slate-500 hover:bg-slate-700" data-copy="#intro-snippet">Copy</button>
+          </div>
+          <pre id="intro-snippet" class="m-0 overflow-auto p-3.5 font-mono text-sm leading-6 text-slate-50"><code>&lt;details class="nav-group" open&gt;
+  &lt;summary&gt;Frontend Basics&lt;/summary&gt;
+  &lt;button data-target="html"&gt;HTML Basics&lt;/button&gt;
+&lt;/details&gt;</code></pre>
+        </div>
+      </article>
+
+      <article id="markdown" class="panel hidden max-w-[920px] animate-fadeSlide">
+        <h2 class="m-0 mb-2 text-3xl font-semibold">Markdown Guide</h2>
+        <div class="md-output mb-4 leading-7 text-slate-700" data-markdown="## Supported Syntax\nUse `#` / `##` / `###` headings, bullet lists, and inline code.\n\n### Example\n- `const total = price * qty`\n- `display: grid;`\n\nMarkdown text is rendered to HTML using JavaScript in this page."></div>
+        <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/20">
+          <div class="flex items-center justify-between border-b border-slate-700 bg-slate-900 px-3 py-2">
+            <span class="text-xs uppercase tracking-wide text-slate-300">javascript</span>
+            <button class="copy-btn rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-sm text-slate-200 transition hover:border-slate-500 hover:bg-slate-700" data-copy="#md-snippet">Copy</button>
+          </div>
+          <pre id="md-snippet" class="m-0 overflow-auto p-3.5 font-mono text-sm leading-6 text-slate-50"><code>function markdownToHtml(md) {
+  return md
+    .replace(/^### (.*)$/gm, '&lt;h3&gt;$1&lt;/h3&gt;')
+    .replace(/\*\*(.*?)\*\*/g, '&lt;strong&gt;$1&lt;/strong&gt;');
+}</code></pre>
+        </div>
+      </article>
+
+      <article id="html" class="panel hidden max-w-[920px] animate-fadeSlide">
+        <h2 class="m-0 mb-2 text-3xl font-semibold">HTML Basics</h2>
+        <div class="md-output mb-4 leading-7 text-slate-700" data-markdown="HTML provides structure for content with semantic elements.\n\n## Common Tags\n- `header`\n- `main`\n- `article`\n- `footer`"></div>
+        <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/20">
+          <div class="flex items-center justify-between border-b border-slate-700 bg-slate-900 px-3 py-2">
+            <span class="text-xs uppercase tracking-wide text-slate-300">html</span>
+            <button class="copy-btn rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-sm text-slate-200 transition hover:border-slate-500 hover:bg-slate-700" data-copy="#html-snippet">Copy</button>
+          </div>
+          <pre id="html-snippet" class="m-0 overflow-auto p-3.5 font-mono text-sm leading-6 text-slate-50"><code>&lt;article&gt;
+  &lt;h2&gt;Section Title&lt;/h2&gt;
+  &lt;p&gt;Section content...&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+        </div>
+      </article>
+
+      <article id="css" class="panel hidden max-w-[920px] animate-fadeSlide">
+        <h2 class="m-0 mb-2 text-3xl font-semibold">CSS Styling</h2>
+        <div class="md-output mb-4 leading-7 text-slate-700" data-markdown="CSS controls layout, spacing, colors, and animation.\n\n## Pattern\n- Keep tokens in `:root`\n- Reuse classes\n- Use media queries for mobile"></div>
+        <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/20">
+          <div class="flex items-center justify-between border-b border-slate-700 bg-slate-900 px-3 py-2">
+            <span class="text-xs uppercase tracking-wide text-slate-300">css</span>
+            <button class="copy-btn rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-sm text-slate-200 transition hover:border-slate-500 hover:bg-slate-700" data-copy="#css-snippet">Copy</button>
+          </div>
+          <pre id="css-snippet" class="m-0 overflow-auto p-3.5 font-mono text-sm leading-6 text-slate-50"><code>.panel {
+  display: none;
+  animation: fadeSlide 300ms ease;
+}
+.panel.active {
+  display: block;
+}</code></pre>
+        </div>
+      </article>
+
+      <article id="js" class="panel hidden max-w-[920px] animate-fadeSlide">
+        <h2 class="m-0 mb-2 text-3xl font-semibold">JavaScript</h2>
+        <div class="md-output mb-4 leading-7 text-slate-700" data-markdown="JavaScript handles interaction logic in this wiki.\n\n## Interactions\n- Click nav to switch panels\n- Search topics instantly\n- Copy snippets to clipboard"></div>
+        <div class="overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl shadow-slate-900/20">
+          <div class="flex items-center justify-between border-b border-slate-700 bg-slate-900 px-3 py-2">
+            <span class="text-xs uppercase tracking-wide text-slate-300">javascript</span>
+            <button class="copy-btn rounded-md border border-slate-600 bg-slate-800 px-2.5 py-1.5 text-sm text-slate-200 transition hover:border-slate-500 hover:bg-slate-700" data-copy="#js-snippet">Copy</button>
+          </div>
+          <pre id="js-snippet" class="m-0 overflow-auto p-3.5 font-mono text-sm leading-6 text-slate-50"><code>await navigator.clipboard.writeText(codeText);
+button.textContent = 'Copied';</code></pre>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    function escapeHtml(input) {
+      return input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function markdownToHtml(md) {
+      const safe = escapeHtml(md);
+      const lines = safe.split('\n');
+      let html = '';
+      let inList = false;
+
+      for (const line of lines) {
+        if (/^###\s+/.test(line)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += '<h3 class="mt-4 mb-2 text-lg font-semibold">' + line.replace(/^###\s+/, '') + '</h3>';
+        } else if (/^##\s+/.test(line)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += '<h3 class="mt-4 mb-2 text-lg font-semibold">' + line.replace(/^##\s+/, '') + '</h3>';
+        } else if (/^#\s+/.test(line)) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += '<h3 class="mt-4 mb-2 text-lg font-semibold">' + line.replace(/^#\s+/, '') + '</h3>';
+        } else if (/^-\s+/.test(line)) {
+          if (!inList) { html += '<ul class="mb-3 list-disc pl-5">'; inList = true; }
+          html += '<li>' + line.replace(/^-\s+/, '') + '</li>';
+        } else if (line.trim() === '') {
+          if (inList) { html += '</ul>'; inList = false; }
+        } else {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += '<p class="mb-3 text-slate-700">' + line + '</p>';
+        }
+      }
+
+      if (inList) html += '</ul>';
+
+      html = html
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code class="rounded-md border border-slate-300 bg-slate-100 px-1.5 py-0.5 font-mono text-sm">$1</code>');
+
+      return html;
+    }
+
+    function renderMarkdownBlocks() {
+      const blocks = document.querySelectorAll('.md-output');
+      blocks.forEach((block) => {
+        const markdown = block.dataset.markdown || '';
+        block.innerHTML = markdownToHtml(markdown);
+      });
+    }
+
+    const navButtons = document.querySelectorAll('.nav button[data-target]');
+    const panels = document.querySelectorAll('.panel');
+
+    function setActiveNav(button) {
+      button.classList.add('active-nav', 'bg-teal-100', 'text-teal-900', 'border-teal-300', 'font-semibold');
+    }
+
+    function clearActiveNav(button) {
+      button.classList.remove('active-nav', 'bg-teal-100', 'text-teal-900', 'border-teal-300', 'font-semibold');
+    }
+
+    function activatePanel(targetId) {
+      navButtons.forEach((btn) => {
+        if (btn.dataset.target === targetId) {
+          setActiveNav(btn);
+        } else {
+          clearActiveNav(btn);
+        }
+      });
+
+      panels.forEach((panel) => {
+        if (panel.id === targetId) {
+          panel.classList.remove('hidden');
+          panel.classList.remove('animate-fadeSlide');
+          panel.classList.add('block');
+          void panel.offsetWidth;
+          panel.classList.add('animate-fadeSlide');
+        } else {
+          panel.classList.remove('block', 'animate-fadeSlide');
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    navButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activatePanel(button.dataset.target);
+      });
+    });
+
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach((button) => {
+      button.addEventListener('click', async () => {
+        const selector = button.dataset.copy;
+        const codeEl = document.querySelector(selector);
+        if (!codeEl) return;
+
+        try {
+          await navigator.clipboard.writeText(codeEl.innerText);
+          const original = button.textContent;
+          button.textContent = 'Copied';
+          button.classList.remove('border-slate-600', 'bg-slate-800', 'text-slate-200');
+          button.classList.add('border-green-300', 'bg-green-100', 'text-green-800');
+          setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove('border-green-300', 'bg-green-100', 'text-green-800');
+            button.classList.add('border-slate-600', 'bg-slate-800', 'text-slate-200');
+          }, 1100);
+        } catch (err) {
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 1100);
+        }
+      });
+    });
+
+    const searchInput = document.getElementById('search');
+    const navGroups = document.querySelectorAll('.nav-group');
+    const groupToggles = document.querySelectorAll('.group-toggle');
+    const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+    const wikiNav = document.getElementById('wiki-nav');
+
+    groupToggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const group = toggle.closest('[data-group]');
+        const content = group.querySelector('[data-group-content]');
+        const icon = toggle.querySelector('.toggle-icon');
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        content.classList.toggle('hidden', expanded);
+        icon.textContent = expanded ? '▸' : '▾';
+      });
+    });
+
+    function filterTopics(query) {
+      const text = query.trim().toLowerCase();
+
+      navGroups.forEach((group) => {
+        let groupHasVisibleItem = false;
+        const groupButtons = group.querySelectorAll('button[data-target]');
+
+        groupButtons.forEach((button) => {
+          const match = button.textContent.toLowerCase().includes(text);
+          button.classList.toggle('hidden', !match);
+          if (match) groupHasVisibleItem = true;
+        });
+
+        group.classList.toggle('hidden', !groupHasVisibleItem);
+        if (groupHasVisibleItem && text) {
+          const toggle = group.querySelector('.group-toggle');
+          const content = group.querySelector('[data-group-content]');
+          const icon = group.querySelector('.toggle-icon');
+          toggle.setAttribute('aria-expanded', 'true');
+          content.classList.remove('hidden');
+          icon.textContent = '▾';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', (event) => {
+      filterTopics(event.target.value);
+    });
+
+    mobileNavToggle.addEventListener('click', () => {
+      const isHidden = wikiNav.classList.contains('hidden');
+      if (isHidden) {
+        wikiNav.classList.remove('hidden');
+        mobileNavToggle.textContent = 'Hide Menu';
+        mobileNavToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        wikiNav.classList.add('hidden');
+        mobileNavToggle.textContent = 'Show Menu';
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    renderMarkdownBlocks();
+    activatePanel('intro');
+  </script>
+</body>
+</html>
